@@ -6,13 +6,15 @@ import org.springframework.context.annotation.Bean;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.utility.DockerImageName;
 
-@TestConfiguration(proxyBeanMethods = false)
+@TestConfiguration
 class TestcontainersConfiguration {
 
 	@Bean
 	@ServiceConnection
 	MySQLContainer<?> mysqlContainer() {
-		return new MySQLContainer<>(DockerImageName.parse("mysql:latest"));
+		return new MySQLContainer<>(DockerImageName.parse("mysql:8.0.32"))
+				.withDatabaseName("movingdb")
+				.withUsername("root")
+				.withPassword("12345");
 	}
-
 }
